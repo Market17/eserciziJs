@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .rosso { color: red; }
+            .giallo { background-color: yellow; }
+        </style>
+    </head>
+<body>
+
+
+<button id="myBtn">clicca qui</button>
+
+<a id="link" href="https://www.w3schools.com/js/js_htmldom_eventlistener.asp">clicca qui per vedere il sito</a>
+<p id="demo"></p>
+
+<ul id="lista">
+    <li>elemento 1</li>
+    <li>elemento 2</li>
+    <li>elemento 3</li>
+</ul>
+<button onclick="Rosso()">Colora di Rosso</button>
+
+
+
+<input type="text" id="nuovoElemento" placeholder="Inserisci testo...">
+<button onclick="aggiungiElemento()">Aggiungi</button>
+
+
+<button onclick="evidenziaEstremi()">Evidenzia</button>
+
+
+<button onclick="ordinamento()">Ordina</button>
+<button onclick="rimpiazzaLista()">Rimpiazza</button>
+<script>
+
+let pulsante = document.getElementById("myBtn");
+let Demo = document.getElementById("demo");
+let Link = document.getElementById("link");
+pulsante.addEventListener("click", visualizzaLink);
+
+function visualizzaLink() {
+  Demo.textContent = Link.getAttribute("href");
+}
+function Rosso() {
+        let lista = document.getElementById("lista");
+        lista.classList.toggle("rosso");
+    }
+
+
+    function aggiungiElemento() {
+        let textBox = document.getElementById("nuovoElemento");
+        let text = textBox.value.trim();
+        if (text !== "") {
+            let newItem = document.createElement("li");
+            newItem.textContent = text;
+            document.getElementById("lista").appendChild(newItem);
+            textBox.value = "";
+        }
+    }
+
+    function evidenziaEstremi() {
+        let items = document.querySelectorAll("#lista li");
+        items.forEach(item => item.classList.remove("giallo"));
+        if (items.length > 0) {
+            items[0].classList.add("giallo");
+            if (items.length > 1) {
+                items[items.length - 1].classList.add("giallo");
+            }
+        }
+    }
+
+   
+
+    function ordinamento() {
+        let list = document.getElementById("lista");
+        let items = list.children;
+        let arr = new Array(items.length);
+        for (let i = 0; i < items.length; i++) {
+            arr[i] = items[i].textContent;
+        }
+        for (let i = 0; i < arr.length - 1; i++) {
+            for (let j = i + 1; j < arr.length; j++) {
+                if (arr[i] > arr[j]) {
+                    let temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        list.innerHTML = "";
+        for (let i = 0; i < arr.length; i++) {
+            let li = document.createElement("li");
+            li.textContent = arr[i];
+            list.appendChild(li);
+        }
+    }
+    function rimpiazzaLista() {
+            let list = document.getElementById("lista");
+            let items = list.children;
+            let arr = new Array(items.length);
+            for (let i = 0; i < items.length; i++) {
+                arr[i] = items[i].innerHTML = "<li>Che brutto Javascript!</li>";
+            }
+        }
+
+</script>
+
+</body>
+</html> 
