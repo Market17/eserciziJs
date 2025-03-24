@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Lista delle Attività</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .contenitore-attivita {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 30%;
+        }
+
+        .sezione-aggiungi-attivita {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .bottone-aggiungi {
+            padding: 8px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-left: 5px;
+            border-radius: 4px;
+        }
+
+        .bottone-aggiungi:hover {
+            background: #218838;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        
+        li {
+            background: #fff;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 2px solid #007bff;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .pulsante-elimina,
+        .pulsante-sposta-su,
+        .pulsante-sposta-giu,
+        .pulsante-modifica {
+            background: #ffffff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 20px;
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="contenitore-attivita">
+
+        <h2>Lista delle Attività 📝</h2>
+
+        <div class="sezione-aggiungi-attivita">
+
+            <input type="text" id="attivita" placeholder="inserisci una nuova attività...">
+
+            <button class="bottone-aggiungi" id="aggiungi-attivita">aggiungi</button>
+
+        </div>
+
+        <ul id="listaAttivita"></ul>
+        <li id="attivitaFissa">Studiare Sistemi e Reti</li>
+
+    </div>
+
+    <script>
+
+        let listaAttivita = document.getElementById("listaAttivita");
+        let bottoneAggiungi = document.getElementById("aggiungi-attivita");
+
+        
+        bottoneAggiungi.addEventListener("click", aggiungiAttivita);
+
+        
+        function aggiungiAttivita() {
+            let inputAttivita = document.getElementById("attivita");
+            let testoAttivita = inputAttivita.value.trim();
+            if (testoAttivita !== "") {
+
+                let nuovoElemento = document.createElement("li");
+
+                
+                let contenitoreAttivita = document.createElement("div");
+                contenitoreAttivita.textContent = testoAttivita;
+
+                let gruppoPulsanti = document.createElement("div");
+
+                
+                let eliminaAttivita = document.createElement("button");
+                eliminaAttivita.textContent = "❌";
+                eliminaAttivita.classList.add("pulsante-elimina");
+
+                
+                let spostaSu = document.createElement("button");
+                spostaSu.textContent = "⬆️";
+                spostaSu.classList.add("pulsante-sposta-su");
+
+                
+                let spostaGiu = document.createElement("button");
+                spostaGiu.textContent = "⬇️";
+                spostaGiu.classList.add("pulsante-sposta-giu");
+
+                
+                let modificaAttivita = document.createElement("button");
+                modificaAttivita.textContent = "✏️";
+                modificaAttivita.classList.add("pulsante-modifica");
+
+                
+                eliminaAttivita.addEventListener("click", function () {
+                    nuovoElemento.remove();
+                });
+
+                
+                spostaSu.addEventListener("click", function () {
+                    let attivitaFissa = document.getElementById("attivitaFissa");
+                    let prev = nuovoElemento.previousElementSibling;
+                    if (prev && prev !== attivitaFissa) {
+                        nuovoElemento.parentNode.insertBefore(nuovoElemento, prev);
+                    }
+                });
+
+                
+                spostaGiu.addEventListener("click", function () {
+                    let next = nuovoElemento.nextElementSibling;
+                    if (next) {
+                        nuovoElemento.parentNode.insertBefore(next, nuovoElemento);
+                    }
+                });
+
+                
+                modificaAttivita.addEventListener("click", function () {
+                    let nuovoTestoAttivita = prompt("Modifica la tua attività:", contenitoreAttivita.textContent);
+                    if (nuovoTestoAttivita !== null && nuovoTestoAttivita.trim() !== "") {
+                        contenitoreAttivita.textContent = nuovoTestoAttivita;
+                    }
+                });
+
+
+                
+                gruppoPulsanti.appendChild(eliminaAttivita);
+                gruppoPulsanti.appendChild(spostaSu);
+                gruppoPulsanti.appendChild(spostaGiu);
+                gruppoPulsanti.appendChild(modificaAttivita);
+
+                
+                nuovoElemento.appendChild(contenitoreAttivita);
+                nuovoElemento.appendChild(gruppoPulsanti);
+
+
+                let attivitaFissa = document.getElementById("attivitaFissa");
+
+                
+                attivitaFissa.parentNode.insertBefore(nuovoElemento, attivitaFissa.nextSibling);
+
+                
+                inputAttivita.value = "";
+
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
