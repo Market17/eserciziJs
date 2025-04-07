@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>title</title>
+    <style>
+        h1 {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+
+        .colore {
+            background-color: black;
+            color: white;
+
+        }
+        
+        button,
+        p,
+        input,
+        select {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+
+        }
+
+        .contenitore {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            display: none; 
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="tutolo">Esercizi sugli Eventi</h1>
+    <div class="contenitore">
+
+        <button id="bt1">Fai doppio click</button>
+        <div>
+            <p class="colore" id="passa">passa sopra con il mouse</p>
+        </div>
+        <input id="cambiaCol" placeholder="scrivi la parola speciale">
+        <select id="seleziona">
+            <option value="">seleziona il colore del titolo</option>
+            <option value="black">nero</option>
+            <option value="red">Rosso</option>
+            <option value="blue">blu</option>
+            <option value="purple">viola</option>
+            <option value="green">verde</option>
+        </select>
+
+        
+        <input type="text" id="miaTextbox" >
+        <div class="error" id="errorMessage">Il campo non può essere vuoto!</div>
+
+    </div>
+    <script>
+
+        let bot1 = document.getElementById("bt1");
+
+        bot1.addEventListener("dblclick", () => {
+
+            alert("Doppio click");
+
+        });
+
+
+        let bot2 = document.getElementById("passa");
+
+        bot2.addEventListener("mouseenter", () => {
+
+            bot2.style.backgroundColor = "yellow";
+
+            bot2.style.color = "green";
+
+        });
+        bot2.addEventListener("mouseleave", () => {
+
+            bot2.style.backgroundColor = "black";
+
+            bot2.style.color = "white";
+
+        });
+
+        let bot3 = document.getElementById("cambiaCol");
+
+        bot3.addEventListener("blur", () => {
+
+            if (bot3.value == "blu") {
+
+                document.body.style.backgroundColor = "blue";
+            }
+            else {
+                document.body.style.backgroundColor = "";
+            }
+        });
+
+        let bot4 = document.getElementById("seleziona")
+        let titolo = document.getElementById("tutolo")
+
+        bot4.addEventListener("change", () => {
+
+            let valore = bot4.value;
+
+            if (valore != "") {
+
+                titolo.style.color = valore;
+            }
+            else {
+                titolo.style.color = "";
+            }
+
+        });
+
+        let textbox = document.getElementById('miaTextbox');
+        let errorMessage = document.getElementById('errorMessage');
+
+        textbox.addEventListener('focus', ()=> {
+            textbox.style.border = "10px solid blue";
+        });
+
+        
+        textbox.addEventListener('blur', ()=> {
+            if (textbox.value.trim() == "") {
+                let messaggio = document.getElementById("messaggio");
+                messaggio.textContent = "attenzione, campo obbligatorio";
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
